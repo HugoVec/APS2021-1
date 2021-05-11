@@ -34,17 +34,19 @@ public class Login extends JFrame {
 	
 	private void configurarComponentes() {	
 		this.setLayout(null);
-		this.setMinimumSize(new Dimension(400, 300));
+		this.setMinimumSize(new Dimension(450, 400));
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
-		jb_login.setBounds(10,270,370,100);
+		jb_login.setBounds(40,270,375,40);
 		
 		jl_usuario.setBounds(10,120,100,40);
 		jl_usuario.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		
 		jl_porta.setBounds(10,160,100,40);
+		jl_porta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
 		
 		jt_usuario.setBounds(120,120,265,40);
 		jt_porta.setBounds(120,170,265,40);
