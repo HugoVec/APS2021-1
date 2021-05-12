@@ -1,18 +1,22 @@
+package telas;
+import java.net.Socket;
 import javax.swing.*;
 import java.awt.*;
 
 class Home extends JFrame {
 
     private String connection_info;
-
+    private Socket connection;
     private JLabel jl_title;
     private JButton jb_get_connected, jb_start_talk;
     private JList j_list;
     private JScrollPane scroll_pane;
-
-    public Home(connection_info){
+    
+    
+    public Home(Socket connection, String connection_info){
         super("CHAT - HOME");
         this.connection_info = connection_info;
+        this.connection = connection;
         initComponents();
         configComponents();
         insertComponents();
@@ -32,7 +36,7 @@ class Home extends JFrame {
         this.setLayout(null);
         this.setMinimumSize(new Dimension(600,480));
         this.setResizable(false);
-        this.SetDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.white);
 
         jl_title.setBounds(10,10,370,40);
@@ -49,7 +53,7 @@ class Home extends JFrame {
 
         scroll_pane.setBounds(10,60,575,335);
         scroll_pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroll_pane.setHorizontalScrollBarPolicy(JscrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll_pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scroll_pane.setBorder(null);
     }
 
@@ -67,10 +71,6 @@ class Home extends JFrame {
     private void start(){
         this.pack();
         this.setVisible(true);
-    }
-
-    public static void main(String[] args){
-        Home home = new Home();
     }
 
 }
