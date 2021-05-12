@@ -1,6 +1,8 @@
 package telas;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -70,6 +72,29 @@ public class Chat extends JFrame{
 	
 	private void inserirAcoes() {
 		botaoEnvia.addActionListener(event -> enviaMensagem());
+		enviaMsg.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+					enviaMensagem();
+				}
+				
+			}
+		});
 	}
 	
 	private void atualizaMensagem(String msg) {
