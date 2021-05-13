@@ -7,6 +7,9 @@ import java.net.Socket;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 class Home extends JFrame {
 
@@ -18,6 +21,11 @@ class Home extends JFrame {
     private JButton jb_get_connected, jb_start_talk;
     private JList j_list;
     private JScrollPane scroll_pane;
+    
+    // Quais chats estao abertos
+ 	private ArrayList<String> opened_chats;
+ 	// Referencia para os chatListeners dos Chats abertos
+ 	private Map<String, ClientListener> connected_listeners;
     
     
     public Home(Socket connection, String connection_info){
@@ -32,6 +40,9 @@ class Home extends JFrame {
     }
 
     private void initComponents(){
+
+    	connected_listeners = new HashMap<String, ClientListener>();
+    	opened_chats = new ArrayList<String>();
         connected_users = new ArrayList<>();
         jl_title = new JLabel("< USUARIO: " + connection_info.split(":")[0] + " >", SwingConstants.CENTER);
         jb_get_connected = new JButton("Atulizar Contatos");
@@ -131,6 +142,16 @@ class Home extends JFrame {
             j_list.setListData(connected_users.toArray());
         }
     }
+    
+    // comenta esses 2
+	public ArrayList<String> getOpened_chats() {
+		return opened_chats;
+	}
+
+	public Map<String, ClientListener> getConnected_listeners() {
+		return connected_listeners;
+	}
+
 
 }
 
