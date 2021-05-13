@@ -143,13 +143,16 @@ class Home extends JFrame {
         }
     }
     
-    // comenta esses 2
 	public ArrayList<String> getOpened_chats() {
 		return opened_chats;
 	}
 
 	public Map<String, ClientListener> getConnected_listeners() {
 		return connected_listeners;
+	}
+
+	public String getConnection_info() {
+		return connection_info;
 	}
 
 

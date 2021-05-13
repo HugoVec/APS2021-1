@@ -3,6 +3,7 @@ package telas;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,12 +21,16 @@ public class Chat extends JFrame{
 	private JPanel painel;
 	private JScrollPane scroll;
 	
+	private Home home;
+	private Socket connection_s;
 	private ArrayList<String> lista_mensagens;
 	
 	
 	
-	public Chat(String connection, String title) {
+	public Chat(Home home, Socket connection_s ,String connection, String title) {
 		super("Bate papo " + title);
+		this.home = home;
+		this.connection_s = connection_s;
 		this.connection = connection;
 		iniciarComponentes();
 		configurarComponentes();
@@ -123,10 +128,6 @@ public class Chat extends JFrame{
 	private void start() {
 		this.pack();
 		this.setVisible(true);
-	}
-	
-	public static void main(String[] args) {
-		Chat chat = new Chat("Dolin:127.0.0.1:9999", "Jão");
 	}
 
 }
