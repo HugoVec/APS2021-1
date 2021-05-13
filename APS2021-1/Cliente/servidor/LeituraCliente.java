@@ -1,5 +1,6 @@
 package servidor;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.Map;
 
@@ -33,9 +34,15 @@ public class LeituraCliente implements Runnable {
 		while(rodando) {
 			mensagem = Utils.receiveMessage(connection);
 			if(mensagem.equals("QUIT")) {
+				servidor.getClientes().remove(connection_info);
+				try {
+					connection.close();
+				} catch (IOException e) {
+					System.out.println("[LeituraCliente:Run] ->" + e.getMessage());
+				}
 				rodando = false;
 			}else if(mensagem.equals("GET_CONNECTED_USERS")){
-				System.out.println("Solicitação de atualizar lista de contatos...");
+				System.out.println("Solicitaï¿½ï¿½o de atualizar lista de contatos...");
 				String response = "";
 				for(Map.Entry<String,LeituraCliente> pair: servidor.getClientes().entrySet()) {
 					response += (pair.getKey() + ";");
