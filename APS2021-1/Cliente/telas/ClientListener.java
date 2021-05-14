@@ -81,7 +81,7 @@ public class ClientListener implements Runnable {
                             home.getOpened_chats().add(connection_info);
                             home.getConnected_listeners().put(connection_info, this);
                             chatOpen = true;
-                            chat = new Chat(home, socket, connection_info, home.getConnection_info().split(":")[0]);
+                            chat = new Chat(home, socket, connection_info, home.getinfoConexao().split(":")[0]);
                         }
                     } else if (fields[0].equals("MESSAGE")) {
                         chat.append_message(fields[1]);

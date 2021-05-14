@@ -168,7 +168,7 @@ public class Chat extends GUI {
     private void send() {
         DateFormat df = new SimpleDateFormat("hh:mm:ss");
         message_list.add("<b>[" + df.format(new Date()) + "] Eu: </b><i>" + jt_message.getText() + "</i><br>");
-        Utils.sendMessage(connection, "MESSAGE;<b>[" + df.format(new Date()) + "] " + home.getConnection_info().split(":")[0] + ": </b><i>" + jt_message.getText() + "</i><br>");
+        Utils.sendMessage(connection, "MESSAGE;<b>[" + df.format(new Date()) + "] " + home.getinfoConexao().split(":")[0] + ": </b><i>" + jt_message.getText() + "</i><br>");
         String message = "";
         for (String str : message_list) {
             message += str;
