@@ -12,10 +12,7 @@ import java.util.Map;
 import java.util.*;
 import servidor.Server;
 
-/**
- *
- * @author Dinho
- */
+
 public class ClientListener implements Runnable {
 
     private boolean running;

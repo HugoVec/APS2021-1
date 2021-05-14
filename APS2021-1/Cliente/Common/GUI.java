@@ -8,10 +8,6 @@ package Common;
 import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 
-/**
- *
- * @author Dinho
- */
 public abstract class GUI extends JFrame{
     public GUI(String title){
         super(title);

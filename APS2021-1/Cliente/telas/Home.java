@@ -22,10 +22,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import servidor.Server;
 
-/**
- *
- * @author Dinho
- */
+
 public class Home extends GUI {
 
     private JLabel title;

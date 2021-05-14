@@ -12,10 +12,6 @@ import java.net.Socket;
 import java.util.*;
 
 
-/**
- *
- * @author Dinho
- */
 public class Utils {
     public static boolean sendMessage(Socket sock, String message)
     {     
