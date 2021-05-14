@@ -3,6 +3,7 @@ import Common.Utils;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.net.Socket;
 import javax.swing.*;
 import java.awt.*;
@@ -123,6 +124,7 @@ class Home extends JFrame {
         });
 
         jb_get_connected.addActionListener(event -> getConnectedUsers());
+        jb_start_talk.addActionListener(event -> openChat());
     }
 
     private void start(){
@@ -155,6 +157,32 @@ class Home extends JFrame {
 		return connection_info;
 	}
 
+	/**
+	 * 
+	 */
+	private void openChat() {
+		int index = j_list.getSelectedIndex();
+		if (index != -1) {
+			 String  connection_info = j_list.getSelectedValue().toString();
+			 String[] splited = connection_info.split(";");
+			 
+			 if(!opened_chats.contains(connection_info)) {
+				 try {
+					 Socket connection = new Socket(splited[1], Integer.parseInt(splited[2]));
+					 Utils.sendMessage(connection, "ABRIR_CHAT|" + this.connection_info);
+					 ClientListener client = new ClientListener(this, connection);
+					 client.setChat(new Chat(this, connection, connection_info, this.connection_info.split(":")[0]));
+					 client.setChatOpen(true);
+					 connected_listeners.put(connection_info, client);
+					 opened_chats.add(connection_info);
+				 }
+				 catch(IOException ex){
+					 System.err.println("[HOME:openChat] -> "+ ex.getMessage());
+				 }
+				 
+			 }
+		}
+	}
 
 }
 
