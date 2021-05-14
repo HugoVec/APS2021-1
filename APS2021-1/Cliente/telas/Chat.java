@@ -1,133 +1,183 @@
-package telas;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package client;
 
-import java.awt.*;
+import common.GUI;
+import common.Utils;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
-import javax.swing.*;
+/**
+ *
+ * @author Dinho
+ */
+public class Chat extends GUI {
 
-public class Chat extends JFrame{
-	
-	private String connection;
-	
-	private JLabel title;
-	private JTextField enviaMsg;
-	private JEditorPane mensagens;
-	private JButton botaoEnvia;
-	private JPanel painel;
-	private JScrollPane scroll;
-	
-	private Home home;
-	private Socket connection_s;
-	private ArrayList<String> lista_mensagens;
-	
-	
-	
-	public Chat(Home home, Socket connection_s ,String connection, String title) {
-		super("Bate papo " + title);
-		this.home = home;
-		this.connection_s = connection_s;
-		this.connection = connection;
-		iniciarComponentes();
-		configurarComponentes();
-		inserirComponentes();
-		inserirAcoes();
-		start();
-	}
-	
+    private JLabel jl_title;
+    private JEditorPane messages;
+    private JTextField jt_message;
+    private JButton jb_message;
+    private JPanel panel;
+    private JScrollPane scroll;
 
-	private void iniciarComponentes() {
-		lista_mensagens = new ArrayList<String>();
-		title = new JLabel(connection.split(":")[0], SwingConstants.CENTER);
-		mensagens = new JEditorPane();
-		scroll = new JScrollPane(mensagens);
-		enviaMsg = new JTextField();
-		botaoEnvia = new JButton("Envia");
-		painel = new JPanel(new BorderLayout());
-		
-		
-	}
-	
-	private void configurarComponentes() {	
-		this.setMinimumSize(new Dimension(480, 720));
-		this.setLayout(new BorderLayout());
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		mensagens.setContentType("text/html");
-		mensagens.setEditable(false);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		
-		botaoEnvia.setSize(100,40);
-	
-	}
-	
+    private ArrayList<String> message_list;
+    private Home home;
+    private Socket connection;
+    private String connection_info;
 
-	private void inserirComponentes() {
-		this.add(title, BorderLayout.NORTH);
-		this.add(scroll, BorderLayout.CENTER);
-		this.add(painel, BorderLayout.SOUTH);
-		painel.add(enviaMsg, BorderLayout.CENTER);
-		painel.add(botaoEnvia, BorderLayout.EAST);
+    public Chat(Home home, Socket connection, String connection_info, String title) {
+        super("Chat " + title);
+        this.home = home;
+        this.connection_info = connection_info;
+        message_list = new ArrayList<String>();
+        this.connection = connection;
+        this.jl_title.setText(connection_info.split(":")[0]);
+        this.jl_title.setHorizontalAlignment(SwingConstants.CENTER);
+    }
 
-	}
-	
-	private void inserirAcoes() {
-		botaoEnvia.addActionListener(event -> enviaMensagem());
-		enviaMsg.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				if(e.getKeyChar() == KeyEvent.VK_ENTER) {
-					enviaMensagem();
-				}
-				
-			}
-		});
-	}
-	
-	private void atualizaMensagem(String msg) {
-		lista_mensagens.add(msg);
-		String vazio = "";
-		
-		for (String a: lista_mensagens) {
-			vazio += a;
-		}
-		mensagens.setText(vazio);
-	}
-	
-	private void enviaMensagem() {
-		if(enviaMsg.getText().length() > 0) {
-			DateFormat dt = new SimpleDateFormat("hh:mm");
-			atualizaMensagem("[" + dt.format(new Date()) + "] <b>Eu:</b> " + enviaMsg.getText() + "<br>");
-			enviaMsg.setText("");
-		}
-	}
-	
+    @Override
+    protected void initComponents() {
+        jl_title = new JLabel();
+        messages = new JEditorPane();
+        scroll = new JScrollPane(messages);
+        jt_message = new JTextField();
+        jb_message = new JButton("Enviar");
+        panel = new JPanel(new BorderLayout());
+    }
 
-	
-	
-	
-	
-	private void start() {
-		this.pack();
-		this.setVisible(true);
-	}
+    @Override
+    protected void configComponents() {
+        this.setMinimumSize(new Dimension(480, 720));
+        this.setLayout(new BorderLayout());
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        messages.setContentType("text/html");
+        messages.setEditable(false);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jb_message.setSize(100, 40);
+    }
+
+    @Override
+    protected void insertComponents() {
+        this.add(jl_title, BorderLayout.NORTH);
+        this.add(scroll, BorderLayout.CENTER);
+        this.add(panel, BorderLayout.SOUTH);
+        panel.add(jt_message, BorderLayout.CENTER);
+        panel.add(jb_message, BorderLayout.EAST);
+    }
+
+    @Override
+    protected void insertActions() {
+        jt_message.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    send();
+                }
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+
+        });
+        jb_message.addActionListener(event -> send());
+        this.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Utils.sendMessage(connection, "CHAT_CLOSE");
+                home.getOpened_chats().remove(connection_info);
+                home.getConnected_listeners().get(connection_info).setChatOpen(false);
+                home.getConnected_listeners().get(connection_info).setRunning(false);
+                home.getConnected_listeners().remove(connection_info);
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+
+        });
+    }
+
+    public void append_message(String received) {
+        message_list.add(received);
+        String message = "";
+        for (String str : message_list) {
+            message += str;
+        }
+        messages.setText(message);
+    }
+
+    @Override
+    protected void start() {
+        this.pack();
+        this.setVisible(true);
+    }
+
+    private void send() {
+        DateFormat df = new SimpleDateFormat("hh:mm:ss");
+        message_list.add("<b>[" + df.format(new Date()) + "] Eu: </b><i>" + jt_message.getText() + "</i><br>");
+        Utils.sendMessage(connection, "MESSAGE;<b>[" + df.format(new Date()) + "] " + home.getConnection_info().split(":")[0] + ": </b><i>" + jt_message.getText() + "</i><br>");
+        String message = "";
+        for (String str : message_list) {
+            message += str;
+        }
+        messages.setText(message);
+        jt_message.setText("");
+
+    }
 
 }
