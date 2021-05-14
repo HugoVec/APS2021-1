@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package telas;
 
-import common.GUI;
-import common.Utils;
+import Common.GUI;
+import Common.Utils;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -22,12 +22,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import server.Server;
+import servidor.Server;
 
-/**
- *
- * @author Dinho
- */
+
 public class Login extends GUI {
 
     private JButton jb_login;

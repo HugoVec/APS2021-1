@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package telas;
 
-import common.Utils;
+import Common.Utils;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
 
-/**
- *
- * @author Dinho
- */
+
+
 public class ClientListener implements Runnable {
 
     private boolean running;

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package telas;
 
-import common.GUI;
-import common.Utils;
+import Common.GUI;
+import Common.Utils;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -27,10 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-/**
- *
- * @author Dinho
- */
+
 public class Chat extends GUI {
 
     private JLabel jl_title;

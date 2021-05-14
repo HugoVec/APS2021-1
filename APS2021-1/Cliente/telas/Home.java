@@ -1,7 +1,7 @@
-package client;
+package telas;
 
-import common.GUI;
-import common.Utils;
+import Common.GUI;
+import Common.Utils;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
@@ -20,7 +20,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import server.Server;
+import servidor.Server;
 
 /**
  *
