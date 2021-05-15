@@ -37,10 +37,16 @@ public class Login extends GUI {
 
     @Override
     protected void initComponents() {
+        Color myWhite = new Color(39, 49, 184);
         jl_title = new JLabel("CHAT", SwingConstants.CENTER);
+        jl_title.setForeground(Color.black);
         jb_login = new JButton("Entrar");
+        jb_login.setForeground(Color.white);
+        jb_login.setBackground(myWhite);
         jl_user = new JLabel("Apelido", SwingConstants.CENTER);
+        jl_user.setForeground(Color.black);
         jl_port = new JLabel("Porta", SwingConstants.CENTER);
+        jl_port.setForeground(Color.black);
         jt_user = new JTextField();
         jt_port = new JTextField();
     }
@@ -48,14 +54,14 @@ public class Login extends GUI {
     @Override
     protected void configComponents() {
         this.setLayout(null);
-        this.setMinimumSize(new Dimension(400, 300));
+        this.setMinimumSize(new Dimension(450, 350));
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.WHITE);
 
         jl_title.setBounds(10, 10, 375, 100);
-        ImageIcon icon = new ImageIcon("logo.jpg");
-        jl_title.setIcon(new ImageIcon(icon.getImage().getScaledInstance(375, 100, Image.SCALE_SMOOTH)));
+        ImageIcon icon = new ImageIcon("logo.png");
+        jl_title.setIcon(new ImageIcon(icon.getImage().getScaledInstance(150, 125, Image.SCALE_SMOOTH)));
 
         jb_login.setBounds(10, 220, 375, 40);
 
