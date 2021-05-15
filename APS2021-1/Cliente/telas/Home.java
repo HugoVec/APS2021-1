@@ -12,14 +12,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import servidor.Server;
 
 
@@ -27,10 +20,13 @@ public class Home extends GUI {
 
     private JLabel titulo;
     private ServerSocket server;
+    
     private final Socket connection;
     private final String infoConexao;
-    private JButton bt_get_conexao, jb_start_talk;
-    private JList jlist;
+    
+    private JButton botao_conexao, init_talk;
+    private JList lista;
+    
     private JScrollPane scroll;
 
     private ArrayList<String> connected_users;
@@ -39,23 +35,23 @@ public class Home extends GUI {
 
     public Home(Socket connection, String infoConexao) {
         super("Chat - Home");
-        titulo.setText("< UsuÃ¡rio : " + infoConexao.split(":")[0] + " >");
+        titulo.setText("< Usuário : " + infoConexao.split(":")[0] + " >");
         this.connection = connection;
         this.setTitle("Home - " + infoConexao.split(":")[0]);
         this.infoConexao = infoConexao;
         connected_users = new ArrayList<String>();
         opened_chats = new ArrayList<String>();
         connected_listeners = new HashMap<String, ClientListener>();
-        startServer(this, Integer.parseInt(infoConexao.split(":")[2]));
+        iniciarServidor(this, Integer.parseInt(infoConexao.split(":")[2]));
     }
 
     @Override
     protected void initComponents() {
         titulo = new JLabel();
-        bt_get_conexao = new JButton("Atualizar contatos");
-        jlist = new JList();
-        scroll = new JScrollPane(jlist);
-        jb_start_talk = new JButton("Abrir Conversa");
+        botao_conexao = new JButton("Atualizar contatos");
+        lista = new JList();
+        scroll = new JScrollPane(lista);
+        init_talk = new JButton("Abrir Conversa");
     }
 
     @Override
@@ -70,14 +66,14 @@ public class Home extends GUI {
         titulo.setBounds(10, 10, 370, 40);
         titulo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-        bt_get_conexao.setBounds(400, 10, 180, 40);
-        bt_get_conexao.setFocusable(false);
+        botao_conexao.setBounds(400, 10, 180, 40);
+        botao_conexao.setFocusable(false);
 
-        jb_start_talk.setBounds(10, 400, 575, 40);
-        jb_start_talk.setFocusable(false);
+        init_talk.setBounds(10, 400, 575, 40);
+        init_talk.setFocusable(false);
 
-        jlist.setBorder(BorderFactory.createTitledBorder("Usuarios online"));
-        jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lista.setBorder(BorderFactory.createTitledBorder("Usuarios online"));
+        lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         scroll.setBounds(10, 60, 575, 335);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -88,9 +84,9 @@ public class Home extends GUI {
     @Override
     protected void insertComponents() {
         this.add(titulo);
-        this.add(bt_get_conexao);
+        this.add(botao_conexao);
         this.add(scroll);
-        this.add(jb_start_talk);
+        this.add(init_talk);
     }
 
     @Override
@@ -131,8 +127,8 @@ public class Home extends GUI {
 
             }
         });
-        bt_get_conexao.addActionListener(event -> getConnectedUsers());
-        jb_start_talk.addActionListener(event -> openChat());
+        botao_conexao.addActionListener(event -> getConnectedUsers());
+        init_talk.addActionListener(event -> abrirChat());
     }
 
     @Override
@@ -144,7 +140,7 @@ public class Home extends GUI {
     private void getConnectedUsers() {
         Utils.sendMessage(connection, "GET_CONNECTED_USERS");
         String response = Utils.receiveMessage(connection);
-        jlist.removeAll();
+        lista.removeAll();
         connected_users.clear();
         for (String user : response.split(";")) {
             if (!user.equals(infoConexao)) {
@@ -152,13 +148,13 @@ public class Home extends GUI {
             }
 
         }
-        jlist.setListData(connected_users.toArray());
+        lista.setListData(connected_users.toArray());
     }
 
-    private void openChat() {
-        int index = jlist.getSelectedIndex();
+    private void abrirChat() {
+        int index = lista.getSelectedIndex();
         if (index != -1) {
-            String value = jlist.getSelectedValue().toString();
+            String value = lista.getSelectedValue().toString();
             String[] splited = value.split(":");
             if (!opened_chats.contains(value)) {
                 try {
@@ -178,13 +174,13 @@ public class Home extends GUI {
         }
     }
 
-    private void startServer(Home home, int port) {
+    private void iniciarServidor(Home home, int port) {
         new Thread() {
             @Override
             public void run() {
                 try {
                     server = new ServerSocket(port);
-                    System.out.println("Servidor cliente iniciado na porta " + port + " ...");
+                    System.out.println("Servidor cliente iniciado na porta: " + port);
                     while (true) {
                         Socket client = server.accept();
                         ClientListener cl = new ClientListener(home, client);
