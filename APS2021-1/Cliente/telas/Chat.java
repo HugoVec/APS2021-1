@@ -115,8 +115,8 @@ public class Chat extends GUI {
             public void windowClosing(WindowEvent e) {
                 Utils.sendMessage(connection, "CHAT_CLOSE");
                 home.getOpened_chats().remove(connection_info);
-                home.getConnected_listeners().get(connection_info).setChatOpen(false);
-                home.getConnected_listeners().get(connection_info).setRunning(false);
+                home.getConnected_listeners().get(connection_info).setChatAberto(false);
+                home.getConnected_listeners().get(connection_info).setRodando(false);
                 home.getConnected_listeners().remove(connection_info);
             }
 

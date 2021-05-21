@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package telas;
 
 import Common.Utils;
@@ -14,34 +10,35 @@ import java.util.*;
 
 public class ClientListener implements Runnable {
 
-    private boolean running;
+    private boolean rodando;
     private Socket socket;
     private Home home;
-    private boolean chatOpen;
+    private boolean chatAberto;
+    
     private String connection_info;
     private Chat chat;
 
     public ClientListener(Home home, Socket socket) {
-        chatOpen = false;
+        chatAberto = false;
         this.home = home;
-        running = false;
+        rodando = false;
         this.socket = socket;
     }
 
-    public boolean isRunning() {
-        return running;
+    public boolean isRodando() {
+        return rodando;
     }
 
-    public void setRunning(boolean running) {
-        this.running = running;
+    public void setRodando(boolean rodando) {
+        this.rodando = rodando;
     }
 
-    public boolean isChatOpen() {
-        return chatOpen;
+    public boolean isChatAberto() {
+        return chatAberto;
     }
 
-    public void setChatOpen(boolean chatOpen) {
-        this.chatOpen = chatOpen;
+    public void setChatAberto(boolean chatAberto) {
+        this.chatAberto = chatAberto;
     }
 
     public Chat getChat() {
@@ -54,15 +51,15 @@ public class ClientListener implements Runnable {
 
     @Override
     public void run() {
-        running = true;
+        rodando = true;
         String message;
-        while (running) {
+        while (rodando) {
             message = Utils.receiveMessage(socket);
             if (message == null || message.equals("CHAT_CLOSE")) {
-                if (chatOpen) {
+                if (chatAberto) {
                     home.getOpened_chats().remove(connection_info);
                     home.getConnected_listeners().remove(connection_info);
-                    chatOpen = false;
+                    chatAberto = false;
                     try {
                         socket.close();
                     } catch (IOException ex) {
@@ -70,17 +67,17 @@ public class ClientListener implements Runnable {
                     }
                     chat.dispose();
                 }
-                running = false;
+                rodando = false;
             } else {
                 String[] fields = message.split(";");
                 if (fields.length > 1) {
                     if (fields[0].equals("OPEN_CHAT")) {
                         String[] splited = fields[1].split(":");
                         connection_info = fields[1];
-                        if (!chatOpen) {
+                        if (!chatAberto) {
                             home.getOpened_chats().add(connection_info);
                             home.getConnected_listeners().put(connection_info, this);
-                            chatOpen = true;
+                            chatAberto = true;
                             chat = new Chat(home, socket, connection_info, home.getinfoConexao().split(":")[0]);
                         }
                     } else if (fields[0].equals("MESSAGE")) {

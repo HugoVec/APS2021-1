@@ -162,7 +162,7 @@ public class Home extends GUI {
                     Utils.sendMessage(socket, "OPEN_CHAT;" + infoConexao); // manda a mensagem para o outro lado da conversa abrir minha janela
                     ClientListener cl = new ClientListener(this, socket);
                     cl.setChat(new Chat(this, socket, value, this.infoConexao.split(":")[0]));
-                    cl.setChatOpen(true);
+                    cl.setChatAberto(true);
                     connected_listeners.put(value, cl);
                     opened_chats.add(value);
                     new Thread(cl).start();
