@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package telas;
 
 import Common.GUI;
@@ -31,10 +27,11 @@ import javax.swing.SwingConstants;
 
 public class Chat extends GUI {
 
-    private JLabel jl_title;
-    private JEditorPane messages;
-    private JTextField jt_message;
-    private JButton jb_message;
+    private JLabel titulo;
+    private JEditorPane mensagemUser;
+    private JTextField campoMensagem;
+    private JButton botaoMensagem;
+    
     private JPanel panel;
     private JScrollPane scroll;
 
@@ -49,17 +46,17 @@ public class Chat extends GUI {
         this.connection_info = connection_info;
         message_list = new ArrayList<String>();
         this.connection = connection;
-        this.jl_title.setText(connection_info.split(":")[0]);
-        this.jl_title.setHorizontalAlignment(SwingConstants.CENTER);
+        this.titulo.setText(connection_info.split(":")[0]);
+        this.titulo.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
     @Override
     protected void initComponents() {
-        jl_title = new JLabel();
-        messages = new JEditorPane();
-        scroll = new JScrollPane(messages);
-        jt_message = new JTextField();
-        jb_message = new JButton("Enviar");
+        titulo = new JLabel();
+        mensagemUser = new JEditorPane();
+        scroll = new JScrollPane(mensagemUser);
+        campoMensagem = new JTextField();
+        botaoMensagem = new JButton("Enviar");
         panel = new JPanel(new BorderLayout());
     }
 
@@ -68,25 +65,26 @@ public class Chat extends GUI {
         this.setMinimumSize(new Dimension(480, 720));
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        messages.setContentType("text/html");
-        messages.setEditable(false);
+        mensagemUser.setContentType("text/html");
+        mensagemUser.setEditable(false);
+        
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jb_message.setSize(100, 40);
+        botaoMensagem.setSize(100, 40);
     }
 
     @Override
     protected void insertComponents() {
-        this.add(jl_title, BorderLayout.NORTH);
+        this.add(titulo, BorderLayout.NORTH);
         this.add(scroll, BorderLayout.CENTER);
         this.add(panel, BorderLayout.SOUTH);
-        panel.add(jt_message, BorderLayout.CENTER);
-        panel.add(jb_message, BorderLayout.EAST);
+        panel.add(campoMensagem, BorderLayout.CENTER);
+        panel.add(botaoMensagem, BorderLayout.EAST);
     }
 
     @Override
     protected void insertActions() {
-        jt_message.addKeyListener(new KeyListener() {
+        campoMensagem.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -106,7 +104,7 @@ public class Chat extends GUI {
             }
 
         });
-        jb_message.addActionListener(event -> send());
+        botaoMensagem.addActionListener(event -> send());
         this.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -156,7 +154,7 @@ public class Chat extends GUI {
         for (String str : message_list) {
             message += str;
         }
-        messages.setText(message);
+        mensagemUser.setText(message);
     }
 
     @Override
@@ -166,15 +164,15 @@ public class Chat extends GUI {
     }
 
     private void send() {
-        DateFormat df = new SimpleDateFormat("hh:mm:ss");
-        message_list.add("<b>[" + df.format(new Date()) + "] Eu: </b><i>" + jt_message.getText() + "</i><br>");
-        Utils.sendMessage(connection, "MESSAGE;<b>[" + df.format(new Date()) + "] " + home.getinfoConexao().split(":")[0] + ": </b><i>" + jt_message.getText() + "</i><br>");
+        DateFormat df = new SimpleDateFormat("hh:mm");
+        message_list.add("<b>[" + df.format(new Date()) + "] Eu: </b><i>" + campoMensagem.getText() + "</i><br>");
+        Utils.sendMessage(connection, "MESSAGE;<b>[" + df.format(new Date()) + "] " + home.getinfoConexao().split(":")[0] + ": </b><i>" + campoMensagem.getText() + "</i><br>");
         String message = "";
         for (String str : message_list) {
             message += str;
         }
-        messages.setText(message);
-        jt_message.setText("");
+        mensagemUser.setText(message);
+        campoMensagem.setText("");
 
     }
 
