@@ -17,14 +17,14 @@ public class ClientListener implements Runnable {
 
     private boolean running;
     private Socket socket;
-    private String nickname;
+    private String nick;
     private Server server;
 
-    public ClientListener(String nickname, Socket socket, Server server) {
+    public ClientListener(String nick, Socket socket, Server server) {
         this.server = server;
         running = false;
         this.socket = socket;
-        this.nickname = nickname;
+        this.nick = nick;
     }
 
     public boolean isRunning() {
@@ -42,7 +42,7 @@ public class ClientListener implements Runnable {
         while (running) {
             message = Utils.receiveMessage(socket);
             if (message.toLowerCase().equals("quit")) {
-                server.getClientes().remove(nickname);
+                server.getClientes().remove(nick);
                 try {
                     socket.close();
                 } catch (IOException ex) {

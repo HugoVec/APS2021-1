@@ -8,8 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Server {
-
-    public static final String HOST = "127.0.0.1";
+	
+	//LocalHost
+    public static final String HOST = "127.0.0.1"; 
     public static final int PORT = 4444;
 
     private ServerSocket server;
