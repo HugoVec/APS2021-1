@@ -4,8 +4,7 @@ package telas;
 import Common.GUI;
 import Common.Utils;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -15,15 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
+import javax.swing.*;
 
 public class Chat extends GUI {
 
@@ -48,15 +39,23 @@ public class Chat extends GUI {
         this.connection = connection;
         this.titulo.setText(connection_info.split(":")[0]);
         this.titulo.setHorizontalAlignment(SwingConstants.CENTER);
+
+    }
+
+    public Chat() {
+        super("chat");
     }
 
     @Override
     protected void initComponents() {
+        Color myWhite = new Color(39, 49, 184);
         titulo = new JLabel();
         mensagemUser = new JEditorPane();
         scroll = new JScrollPane(mensagemUser);
         campoMensagem = new JTextField();
         botaoMensagem = new JButton("Enviar");
+        botaoMensagem.setForeground(Color.white);
+        botaoMensagem.setBackground(myWhite);
         panel = new JPanel(new BorderLayout());
     }
 
@@ -175,5 +174,10 @@ public class Chat extends GUI {
         campoMensagem.setText("");
 
     }
+
+    public static void main(String[] args) {
+        Chat chat = new Chat();
+    }
+
 
 }
