@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+D * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -73,6 +73,7 @@ public class Login extends GUI {
 
         jt_user.setBounds(120, 120, 265, 40);
         jt_port.setBounds(120, 170, 265, 40);
+       
     }
 
     @Override
@@ -101,11 +102,11 @@ public class Login extends GUI {
                     new Home(connection, request);
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Algum usu√°rio j√° est√° conectado com este apelido ou tem algu√©m na mesma rede utilizando a mesma porta que voc√ä.");
+                    JOptionPane.showMessageDialog(this, "Algum usu·rio j· est· conectado com este apelido ou tem alguÈm na mesma rede utilizando a mesma porta que vocÍ.");
                 }
             } catch (IOException ex) {
                 System.err.println("[ERROR:login] -> " + ex.getMessage());
-                JOptionPane.showMessageDialog(this, "Erro ao conectar. Verifique se o servidor est√° em execu√ß√£o.");
+                JOptionPane.showMessageDialog(this, "Erro ao conectar. Verifique se o servidor est· em execuÁ„o.");
             }
 
         });
@@ -115,6 +116,7 @@ public class Login extends GUI {
     protected void start() {
         this.pack();
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {

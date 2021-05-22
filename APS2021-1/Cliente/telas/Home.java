@@ -35,7 +35,7 @@ public class Home extends GUI {
 
     public Home(Socket connection, String infoConexao) {
         super("Chat - Home");
-        titulo.setText("< Usu�rio : " + infoConexao.split(":")[0] + " >");
+        titulo.setText(" Usuario : " + infoConexao.split(":")[0]);
         this.connection = connection;
         this.setTitle("Home - " + infoConexao.split(":")[0]);
         this.infoConexao = infoConexao;
@@ -103,7 +103,7 @@ public class Home extends GUI {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                System.out.println("Conexão encerrada...");
+                System.out.println("Conexao encerrada...");
                 Utils.sendMessage(connection, "QUIT");
             }
 
@@ -140,6 +140,7 @@ public class Home extends GUI {
     protected void start() {
         this.pack();
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
 
     private void getConnectedUsers() {
