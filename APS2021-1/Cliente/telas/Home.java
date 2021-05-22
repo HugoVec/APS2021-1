@@ -35,7 +35,7 @@ public class Home extends GUI {
 
     public Home(Socket connection, String infoConexao) {
         super("Chat - Home");
-        titulo.setText("< Usuário : " + infoConexao.split(":")[0] + " >");
+        titulo.setText("< Usuï¿½rio : " + infoConexao.split(":")[0] + " >");
         this.connection = connection;
         this.setTitle("Home - " + infoConexao.split(":")[0]);
         this.infoConexao = infoConexao;
@@ -47,17 +47,22 @@ public class Home extends GUI {
 
     @Override
     protected void initComponents() {
+        Color myWhite = new Color(39, 49, 184);
         titulo = new JLabel();
         botao_conexao = new JButton("Atualizar contatos");
+        botao_conexao.setForeground(Color.white);
+        botao_conexao.setBackground(myWhite);
         lista = new JList();
         scroll = new JScrollPane(lista);
         init_talk = new JButton("Abrir Conversa");
+        init_talk.setForeground(Color.white);
+        init_talk.setBackground(myWhite);
     }
 
     @Override
     protected void configComponents() {
         this.setLayout(null);
-        this.setMinimumSize(new Dimension(600, 480));
+        this.setMinimumSize(new Dimension(650, 530));
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.WHITE);
