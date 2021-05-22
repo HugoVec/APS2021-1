@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Common;
 
 import java.io.IOException;
@@ -16,12 +12,14 @@ public class Utils {
     public static boolean sendMessage(Socket sock, String message)
     {     
         try {
+        	
             ObjectOutputStream output = new ObjectOutputStream(sock.getOutputStream());
             output.flush();
             output.writeObject(message);
+            
             return true;
         } catch (IOException ex) {
-            System.err.println("[ERROR:sendMessage] -> " + ex.getMessage());
+            System.err.println("[ERRO:sendMessage] -> " + ex.getMessage());
         }
         return false;
     }
@@ -33,9 +31,11 @@ public class Utils {
             ObjectInputStream input = new ObjectInputStream(sock.getInputStream());
             response = (String) input.readObject();
         } catch (IOException ex) {
-            System.err.println("[ERROR:receiveMessage] -> " + ex.getMessage());
+        	
+            System.err.println("[ERRO:receiveMessage] -> " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-            System.err.println("[ERROR:receiveMessage] -> " + ex.getMessage());
+        	
+            System.err.println("[ERRO:receiveMessage] -> " + ex.getMessage());
         }
          return response;
     }

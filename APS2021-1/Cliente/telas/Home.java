@@ -17,24 +17,31 @@ import servidor.Server;
 
 
 public class Home extends GUI {
-
+	
     private JLabel titulo;
     private ServerSocket server;
     
     private final Socket connection;
     private final String infoConexao;
     
+    /** botao_conexao atualiza a lista de usuarios conectados
+     init_talk abre uma tela de chat com o usuario escolhido **/
     private JButton botao_conexao, init_talk;
-    private JList lista;
     
+    // Lista de usuarios
+    private JList lista;
     private JScrollPane scroll;
 
+    // Lista de usuarios conectados
     private ArrayList<String> connected_users;
+    // Lista de chats abertos
     private ArrayList<String> opened_chats;
     private Map<String, ClientListener> connected_listeners;
 
+    /** O construtor recebe a variavel infoConexao que contem o Nick, o IP e a Porta do usuário
+    Com isso ele valida se são informações validas **/
     public Home(Socket connection, String infoConexao) {
-        super("Chat - Home");
+        super("Chat - Home"); // Nome da aplicação
         titulo.setText(" Usuario : " + infoConexao.split(":")[0]);
         this.connection = connection;
         this.setTitle("Home - " + infoConexao.split(":")[0]);
@@ -45,6 +52,10 @@ public class Home extends GUI {
         iniciarServidor(this, Integer.parseInt(infoConexao.split(":")[2]));
     }
 
+    
+    /** 
+     * Essa funcao inicia os componentes visuais
+     * **/
     @Override
     protected void initComponents() {
         Color myWhite = new Color(39, 49, 184);
@@ -59,6 +70,9 @@ public class Home extends GUI {
         init_talk.setBackground(myWhite);
     }
 
+    /** 
+     * Essa funcao configura os componentes visuais
+     * **/
     @Override
     protected void configComponents() {
         this.setLayout(null);
@@ -85,7 +99,10 @@ public class Home extends GUI {
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.setBorder(null);
     }
-
+    
+    /** 
+     * Essa funcao inseri os componentes visuais
+     * **/
     @Override
     protected void insertComponents() {
         this.add(titulo);
@@ -94,6 +111,10 @@ public class Home extends GUI {
         this.add(init_talk);
     }
 
+    /** 
+     * Essa funcao configura as acoes da tela Home
+     * 
+     * **/
     @Override
     protected void insertActions() {
         this.addWindowListener(new WindowListener() {
@@ -143,29 +164,41 @@ public class Home extends GUI {
         this.setLocationRelativeTo(null);
     }
 
+    /** 
+     * Essa funcao atualiza a lista de usuarios conectados
+     * 
+     * **/
     private void getConnectedUsers() {
         Utils.sendMessage(connection, "GET_CONNECTED_USERS");
         String response = Utils.receiveMessage(connection);
         lista.removeAll();
         connected_users.clear();
         for (String user : response.split(";")) {
+        	//Verifica se a conexao user e diferente da nossa
             if (!user.equals(infoConexao)) {
                 connected_users.add(user);
             }
 
         }
+        // envia a lista de usuarios conectados
         lista.setListData(connected_users.toArray());
     }
 
+    /** 
+     * Essa funcao abre o Chat selecionado
+     * 
+     * **/
     private void abrirChat() {
         int index = lista.getSelectedIndex();
         if (index != -1) {
             String value = lista.getSelectedValue().toString();
             String[] splited = value.split(":");
+            // se o oened_chats não tiver o value ele pode abrir a conversa
             if (!opened_chats.contains(value)) {
                 try {
                     Socket socket = new Socket(splited[1], Integer.parseInt(splited[2]));
-                    Utils.sendMessage(socket, "OPEN_CHAT;" + infoConexao); // manda a mensagem para o outro lado da conversa abrir minha janela
+                    // manda a mensagem para o outro lado da conversa abrir minha janela
+                    Utils.sendMessage(socket, "OPEN_CHAT;" + infoConexao); 
                     ClientListener cl = new ClientListener(this, socket);
                     cl.setChat(new Chat(this, socket, value, this.infoConexao.split(":")[0]));
                     cl.setChatAberto(true);
@@ -179,8 +212,13 @@ public class Home extends GUI {
 
         }
     }
-
+    
+    /** 
+     * Essa funcao prepara o cliente para funcionar como Servidor 
+     * 
+     * **/
     private void iniciarServidor(Home home, int port) {
+    	// Verifica se alguem vai conectar com o cliente
         new Thread() {
             @Override
             public void run() {
