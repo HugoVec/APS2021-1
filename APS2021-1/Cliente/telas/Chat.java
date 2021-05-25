@@ -45,7 +45,11 @@ public class Chat extends GUI {
     public Chat() {
         super("chat");
     }
+    
 
+    /** 
+     * Essa funcao inicia os componentes visuais
+     * **/
     @Override
     protected void initComponents() {
         Color myWhite = new Color(39, 49, 184);
@@ -58,7 +62,10 @@ public class Chat extends GUI {
         botaoMensagem.setBackground(myWhite);
         panel = new JPanel(new BorderLayout());
     }
-
+    
+    /** 
+     * Essa funcao configura os componentes visuais
+     * **/
     @Override
     protected void configComponents() {
         this.setMinimumSize(new Dimension(480, 720));
@@ -71,7 +78,11 @@ public class Chat extends GUI {
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         botaoMensagem.setSize(100, 40);
     }
-
+    
+    /** 
+     * Essa funcao insere os componentes visuais
+     * nas posiçoes adequadas do BorderLayout
+     * **/
     @Override
     protected void insertComponents() {
         this.add(titulo, BorderLayout.NORTH);
@@ -81,8 +92,17 @@ public class Chat extends GUI {
         panel.add(botaoMensagem, BorderLayout.EAST);
     }
 
+    /** 
+     * Essa funcao configura as acoes da tela de Chat
+     * 
+     * **/
     @Override
     protected void insertActions() {
+    	/** 
+         * Serve para enviar a mensagem quando
+         * o usuario clicar a tecla ENTER
+         * 
+         * **/
         campoMensagem.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -103,6 +123,12 @@ public class Chat extends GUI {
             }
 
         });
+        
+        /** 
+         * Quando clicar no botão de enviar 
+         * ele chama a funcao send e envia a mensagem
+         * 
+         * **/
         botaoMensagem.addActionListener(event -> send());
         this.addWindowListener(new WindowListener() {
             @Override
@@ -146,7 +172,12 @@ public class Chat extends GUI {
 
         });
     }
-
+    
+    /** 
+     * Essa funcao serve para atualizar o input da 
+     * mensagem depois de enviala
+     * 
+     * **/
     public void append_message(String received) {
         message_list.add(received);
         String message = "";
@@ -161,7 +192,12 @@ public class Chat extends GUI {
         this.pack();
         this.setVisible(true);
     }
-
+    
+    /** 
+     * Essa funcao serve para quando
+     * a mensagem vai ser enviada
+     * 
+     * **/
     private void send() {
         DateFormat df = new SimpleDateFormat("hh:mm");
         message_list.add("<b>[" + df.format(new Date()) + "] Eu: </b><i>" + campoMensagem.getText() + "</i><br>");
