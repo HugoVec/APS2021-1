@@ -10,14 +10,19 @@ import java.util.*;
 
 public class ClientListener implements Runnable {
 
+    //variável para verificar a conexão da trad
     private boolean rodando;
     private Socket socket;
+    //referencia da pagina home
     private Home home;
+    //variável para verificar se o chat está aberto
     private boolean chatAberto;
     
     private String connection_info;
+
     private Chat chat;
 
+    //método construtor que recebe a conexão e a referência da pagina HOME
     public ClientListener(Home home, Socket socket) {
         chatAberto = false;
         this.home = home;
@@ -25,6 +30,7 @@ public class ClientListener implements Runnable {
         this.socket = socket;
     }
 
+    //getters and setters das variáves chat, chatAberto, rodando
     public boolean isRodando() {
         return rodando;
     }
@@ -49,10 +55,12 @@ public class ClientListener implements Runnable {
         this.chat = chat;
     }
 
+    //métode sobrescrito da classe ClientListener
     @Override
     public void run() {
         rodando = true;
         String message;
+        //estrutura para verificar a conexão da trad
         while (rodando) {
             message = Utils.receiveMessage(socket);
             if (message == null || message.equals("CHAT_CLOSE")) {

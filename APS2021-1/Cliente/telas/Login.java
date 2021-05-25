@@ -27,14 +27,17 @@ import servidor.Server;
 
 public class Login extends GUI {
 
+    //variÃ¡veis de interface grÃ¡fica
     private JButton jb_login;
     private JLabel jl_user, jl_port, jl_title;
     private JTextField jt_user, jt_port;
 
+    //construtor
     public Login() {
         super("Login");
     }
 
+    //mÃ©todos para para inicializar os componetes usados na classe
     @Override
     protected void initComponents() {
         Color myWhite = new Color(39, 49, 184);
@@ -51,6 +54,7 @@ public class Login extends GUI {
         jt_port = new JTextField();
     }
 
+    //mÃ©todo para configuras os componentes
     @Override
     protected void configComponents() {
         this.setLayout(null);
@@ -76,6 +80,7 @@ public class Login extends GUI {
        
     }
 
+    //mÃ©todo para por cada componete em seu devido container
     @Override
     protected void insertComponents() {
         this.add(jl_title);
@@ -86,6 +91,7 @@ public class Login extends GUI {
         this.add(jt_user);
     }
 
+    //mÃ©todo que insere as aÃ§Ãµes dos componetes pelo usuÃ¡rio
     @Override
     protected void insertActions() {
         jb_login.addActionListener(event -> {
@@ -102,11 +108,11 @@ public class Login extends GUI {
                     new Home(connection, request);
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Algum usuário já está conectado com este apelido ou tem alguém na mesma rede utilizando a mesma porta que você.");
+                    JOptionPane.showMessageDialog(this, "Algum usuï¿½rio jï¿½ estï¿½ conectado com este apelido ou tem alguï¿½m na mesma rede utilizando a mesma porta que vocï¿½.");
                 }
             } catch (IOException ex) {
                 System.err.println("[ERROR:login] -> " + ex.getMessage());
-                JOptionPane.showMessageDialog(this, "Erro ao conectar. Verifique se o servidor está em execução.");
+                JOptionPane.showMessageDialog(this, "Erro ao conectar. Verifique se o servidor estï¿½ em execuï¿½ï¿½o.");
             }
 
         });
@@ -119,6 +125,7 @@ public class Login extends GUI {
         this.setLocationRelativeTo(null);
     }
 
+    //mÃ©todo principal
     public static void main(String[] args) {
         Login login = new Login();
     }
